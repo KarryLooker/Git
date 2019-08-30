@@ -11,7 +11,9 @@ def get_content(html,page):
     {}\n-------------\n"""
     soup = BeautifulSoup(html,'html.parser')
     con = soup.find(id='content-left')
+    # print(con)
     con_list = con.find_all('div',class_="article") #找到文章列表
+    print(con_list)
     for i in con_list:
         author = i.find('h2').string #获取作者名字
         content = i.find('div',class_='content').find('span').get_text()  #获取内容
@@ -40,8 +42,8 @@ def save_txt(*args):
             f.write(i)
 
 def main():
-    for i in range(1,14):
-        url = 'https://qiushibaike.com/text/'.format(i)
+    for i in range(1,2):
+        url = 'https://qiushibaike.com/text/page/{}'.format(i)
         html = download_page(url)
         get_content(html,i)
 if __name__=='__main__':
