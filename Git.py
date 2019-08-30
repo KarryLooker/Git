@@ -17,7 +17,8 @@ def get_content(html,page):
         content = i.find('div',class_='content').find('span').get_text()  #获取内容
         stats = i.find('div',class_='stats')
         vote = stats.find('span',class_='stats-vote').find('i',class_='number').string
-        comment = stats.find('span',class_='stats-comments').find('i',class_='number').string  #获取作者 年龄 性别
+        comment = stats.find('span',class_='stats-comments').find('i',class_='number')\
+            .string  #获取作者 年龄 性别
         author_info = i.find('div',class_='articleGender')
         if author_info is not None: #非匿名用户
             class_list = author_info['class']
@@ -40,7 +41,7 @@ def save_txt(*args):
 
 def main():
     for i in range(1,14):
-        url = 'https://qiushibaike.com/text/page/{}'.format(i)
+        url = 'https://qiushibaike.com/text/'.format(i)
         html = download_page(url)
         get_content(html,i)
 if __name__=='__main__':
