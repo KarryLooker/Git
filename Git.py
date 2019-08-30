@@ -7,13 +7,13 @@ def download_page(url):
     return r.text
 
 def get_content(html,page):
-    output = """第{}页 作者：{} 性别：{} 年龄：{} 点赞：{} 评论：{}\n
-    {}\n-------------\n"""
+    output = """第{}页 作者：{} 性别：{} 年龄：{} 点赞：{} 评论：{}\n{}
+        \n------------------------------------------------------------\n\n"""
     soup = BeautifulSoup(html,'html.parser')
     con = soup.find(id='content-left')
     # print(con)
     con_list = con.find_all('div',class_="article") #找到文章列表
-    print(con_list)
+    # print(con_list)
     for i in con_list:
         author = i.find('h2').string #获取作者名字
         content = i.find('div',class_='content').find('span').get_text()  #获取内容
@@ -22,6 +22,7 @@ def get_content(html,page):
         comment = stats.find('span',class_='stats-comments').find('i',class_='number')\
             .string  #获取作者 年龄 性别
         author_info = i.find('div',class_='articleGender')
+        print(author_info)
         if author_info is not None: #非匿名用户
             class_list = author_info['class']
             if "womenIcon" in class_list:
@@ -42,7 +43,7 @@ def save_txt(*args):
             f.write(i)
 
 def main():
-    for i in range(1,2):
+    for i in range(1,3):
         url = 'https://qiushibaike.com/text/page/{}'.format(i)
         html = download_page(url)
         get_content(html,i)
